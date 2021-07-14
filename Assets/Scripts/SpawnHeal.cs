@@ -21,7 +21,6 @@ public class SpawnHeal : MonoBehaviour
         }
     }
 
-
     IEnumerator Spawn()
     {
         yield return new WaitForSeconds(_timeBetweenSpawn);

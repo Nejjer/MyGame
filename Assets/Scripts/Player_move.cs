@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Player_move : MonoBehaviour
 {
-    [SerializeField] private float _speed = 2;
+    [SerializeField] private float _speed = 0.5f;
     [SerializeField] private float _jumpForce = 2;
     [SerializeField] private float _radiusChekedGroundCircle = 1f;
     [SerializeField] private float _limitSpeed = 10f;
     [SerializeField] private float _airFriction = 2f;
+    private float _speedBoost;
+    private float _timeBoost;
     
 
     public LayerMask GroundLayer = 6;
@@ -26,6 +28,10 @@ public class Player_move : MonoBehaviour
         if (GroundLayer == gameObject.layer)
             Debug.LogError("Player SortingLayer must be different from Ground SourtingLayer!");
     }
+
+
+    
+
 
 
     private bool _isGrounded
@@ -98,4 +104,20 @@ public class Player_move : MonoBehaviour
         }
     }
 
+
+
+    public void BoostSpeed(float _size, float _time)
+    {
+        _speedBoost = _size;
+        _timeBoost = _time;
+        _speed += _speedBoost;
+        
+        StartCoroutine("Boost");
+    }
+
+    IEnumerator Boost()
+    {
+        yield return new WaitForSeconds(_timeBoost);
+        _speed -= _speedBoost;
+    }
 }

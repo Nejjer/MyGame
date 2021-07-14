@@ -63,9 +63,6 @@ public class PlayerHealth : MonoBehaviour
     }
 
 
-    private void FixedUpdate()
-    {
-        _health -= 0.001f;
-    }
+    
 }
     
