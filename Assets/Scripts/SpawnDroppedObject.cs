@@ -8,6 +8,8 @@ public class SpawnDroppedObject : MonoBehaviour
     [SerializeField] float _timeBetweenSpawnBoost = 5f;
     [SerializeField] GameObject _saw;
     [SerializeField] float _timeBetweenSpawnSaw = 5f;
+    [SerializeField] GameObject _addScore;
+    [SerializeField] float _timeBetweenSpawnAddScore = 5f;
 
 
     private Vector2 _spawnPos;
@@ -24,6 +26,9 @@ public class SpawnDroppedObject : MonoBehaviour
         StartCoroutine("SpawnBoost");
 
         StartCoroutine("SpawnSaw");
+
+        StartCoroutine("SpawnAddScore");
+
 
     }
 
@@ -50,6 +55,11 @@ public class SpawnDroppedObject : MonoBehaviour
     {
         StartCoroutine("SpawnBoost");
     }
+    private void RestartCouritineAddScore()
+    {
+        StartCoroutine("SpawnAddScore");
+    }
+
     IEnumerator SpawnSaw()
     {
 
@@ -71,4 +81,17 @@ public class SpawnDroppedObject : MonoBehaviour
         Instantiate(_boost, _spawnPos, Quaternion.identity);
         RestartCouritineBoost();
     }
+
+
+    IEnumerator SpawnAddScore()
+    {
+
+        yield return new WaitForSeconds(_timeBetweenSpawnAddScore);
+        //Создаем случайные координаты спавна
+        _spawnPos = new Vector2(Random.Range(-9.5f, 9.5f), 7f);
+
+        Instantiate(_addScore, _spawnPos, Quaternion.identity);
+        RestartCouritineAddScore();
+    }
+
 }

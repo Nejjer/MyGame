@@ -53,13 +53,16 @@
     <UnityVersion>2020.3.13f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Player_move.cs" />
-    <Compile Include="Assets\Scripts\PlayerHealth.cs" />
-    <Compile Include="Assets\Scripts\Heal.cs" />
-    <Compile Include="Assets\Scripts\SpawnHeal.cs" />
     <Compile Include="Assets\Scripts\Boost.cs" />
+    <Compile Include="Assets\Scripts\Heal.cs" />
     <Compile Include="Assets\Scripts\SpawnDroppedObject.cs" />
     <Compile Include="Assets\Scripts\Saw.cs" />
+    <Compile Include="Assets\Scripts\PlayerHealth.cs" />
+    <Compile Include="Assets\Scripts\Player_move.cs" />
+    <Compile Include="Assets\Scripts\SpawnHeal.cs" />
+    <Compile Include="Assets\Scripts\PlayerScore.cs" />
+    <Compile Include="Assets\Scripts\AddScoreObj.cs" />
+    <Compile Include="Assets\Scripts\LoaderScene.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

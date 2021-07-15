@@ -9,6 +9,7 @@ public class Player_move : MonoBehaviour
     [SerializeField] private float _radiusChekedGroundCircle = 1f;
     [SerializeField] private float _limitSpeed = 10f;
     [SerializeField] private float _airFriction = 2f;
+    private Animator _animator;
     private float _speedBoost;
     private float _timeBoost;
     
@@ -21,12 +22,15 @@ public class Player_move : MonoBehaviour
 
     private void Start()
     {
+
         //получаем нужные компоненты
         _rb = GetComponent<Rigidbody2D>();
         _collider = GetComponent<CapsuleCollider2D>();
         // ѕроверка, чтобы сам игрок не был назначен слою Ground
         if (GroundLayer == gameObject.layer)
             Debug.LogError("Player SortingLayer must be different from Ground SourtingLayer!");
+        //инициализируем аниматор
+        _animator = GetComponent<Animator>();
     }
 
 
@@ -51,9 +55,25 @@ public class Player_move : MonoBehaviour
     {
         get
         {
-            var horizontal = Input.GetAxis("Horizontal");
-            
 
+            var horizontal = Input.GetAxis("Horizontal");
+
+            //провер€ем наличие аниматора
+            if (_animator) {
+                //запускаем анимацию бега, при вводе о движении
+
+                _animator.SetBool("run", horizontal != 0);
+            }
+            //зеркалим игрока
+            if (horizontal < 0)
+            {
+                GetComponent<SpriteRenderer>().flipX = true;
+            }
+            else if (horizontal > 0)
+            {
+                GetComponent<SpriteRenderer>().flipX = false;
+
+            }
             return new Vector2(horizontal, 0.0f);
         }
     }
@@ -62,6 +82,7 @@ public class Player_move : MonoBehaviour
 
     private void FixedUpdate()
     {
+        
         //ѕровер€ет жив ли игрок
         if (GetComponent<PlayerHealth>().GetAlive())
         {
@@ -69,7 +90,14 @@ public class Player_move : MonoBehaviour
             Jump();
         }
         
-        
+        //ѕровер€ем надичие аниматора
+        if (_animator)
+        {
+            //анимируем прыжок и падение, которые завис€т от горизонтальной скорости
+            _animator.SetBool("jump", _rb.velocity.y > 0.1f);
+            _animator.SetBool("fall", _rb.velocity.y < -0.1f);
+
+        }
     }
 
     private void Jump()
