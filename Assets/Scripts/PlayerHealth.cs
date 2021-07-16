@@ -2,15 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] GameObject _healthBar;
     private float _health = 1f;
     private bool _alive;
+    private Animator _animator;
 
     private void Start()
     {
         _alive = true;
+        _animator = GetComponent<Animator>();
     }
 
 
@@ -50,7 +53,10 @@ public class PlayerHealth : MonoBehaviour
 
         //Смерть игрока
         if (_health <= 0)
+        {
             _alive = false;
+            _animator.SetBool("hit", true);
+        }
         else
             _alive = true;
         _healthBar.GetComponent<Image>().fillAmount = _health;

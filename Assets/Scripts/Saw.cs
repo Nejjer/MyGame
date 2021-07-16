@@ -13,6 +13,8 @@ public class Saw : MonoBehaviour
         //Смещаем центр масс
         gameObject.GetComponent<Rigidbody2D>().centerOfMass = new Vector2(0.1f, 0f);
     }
+
+    //Наносим игроку урон
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.TryGetComponent(out PlayerHealth _player) && _firstAdded)
