@@ -12,7 +12,9 @@ public class PlayerHealth : MonoBehaviour
 
     private void Start()
     {
+
         _alive = true;
+
         _animator = GetComponent<Animator>();
     }
 
@@ -51,7 +53,7 @@ public class PlayerHealth : MonoBehaviour
     void Update()
     {
 
-        //Смерть игрока
+        //Death player
         if (_health <= 0)
         {
             _alive = false;
@@ -61,7 +63,7 @@ public class PlayerHealth : MonoBehaviour
             _alive = true;
         _healthBar.GetComponent<Image>().fillAmount = _health;
 
-        //Чтобы здоровье не превышало единицу
+        //So that health does not exceed one
         if (_health > 1)
         {
             _health = 1f;

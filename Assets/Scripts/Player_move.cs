@@ -23,14 +23,15 @@ public class Player_move : MonoBehaviour
     private void Start()
     {
 
-        //получаем нужные компоненты
+        //Get components
         _rb = GetComponent<Rigidbody2D>();
         _collider = GetComponent<CapsuleCollider2D>();
-        // Проверка, чтобы сам игрок не был назначен слою Ground
+        _animator = GetComponent<Animator>();
+
+        // Checking that the player himself is not assigned to the Ground layer
         if (GroundLayer == gameObject.layer)
             Debug.LogError("Player SortingLayer must be different from Ground SourtingLayer!");
-        //инициализируем аниматор
-        _animator = GetComponent<Animator>();
+        
     }
 
 
@@ -42,15 +43,16 @@ public class Player_move : MonoBehaviour
     {
         get
         {
+            //created Vector eitn coordinate down center capsule collider
             var bottomCenterPoint = new Vector2(_collider.bounds.center.x, _collider.bounds.min.y);
-            //_radiusChekedGroundCircle - радиус сферы
-            // создаем сферу и проверяем пересечение с объектами на слое Ground(6)
+            //_radiusChekedGroundCircle - radius sphere
+            //create sphere and check crossing with objects in layer Groung(6)
             return Physics2D.OverlapCircle(bottomCenterPoint, _radiusChekedGroundCircle, GroundLayer);
 
         }
     }
     
-    //Вектор для пережвижения
+    //Vector for movement
     private Vector2 _movementVector
     {
         get
@@ -58,13 +60,13 @@ public class Player_move : MonoBehaviour
 
             var horizontal = Input.GetAxis("Horizontal");
 
-            //проверяем наличие аниматора
+            //checking the presence of an animator
             if (_animator) {
-                //запускаем анимацию бега, при вводе о движении
+                // start running animation, when entering about movement
 
                 _animator.SetBool("run", horizontal != 0);
             }
-            //зеркалим игрока
+            //mirror player sprite
             if (horizontal < 0)
             {
                 GetComponent<SpriteRenderer>().flipX = true;
@@ -82,18 +84,18 @@ public class Player_move : MonoBehaviour
 
     private void FixedUpdate()
     {
-        
-        //Проверяет жив ли игрок
+
+        // Checks if the player is alive
         if (GetComponent<PlayerHealth>().GetAlive())
         {
             Move();
             Jump();
         }
-        
-        //Проверяем надичие аниматора
+
+        //checking the presence of an animator
         if (_animator)
         {
-            //анимируем прыжок и падение, которые зависят от горизонтальной скорости
+            // animate the jump and fall, which depend on the horizontal speed
             _animator.SetBool("jump", _rb.velocity.y > 0.1f);
             _animator.SetBool("fall", _rb.velocity.y < -0.1f);
 
@@ -115,15 +117,15 @@ public class Player_move : MonoBehaviour
             _rb.drag = _airFriction;
         else
             _rb.drag = 0f;
-        //ограничиваем скорость
+        // limit the speed
         if (_rb.velocity.x <= _limitSpeed && _rb.velocity.x >= - _limitSpeed)
         {
             _rb.AddForce(_movementVector * _speed, ForceMode2D.Impulse);
         }
         else
         {
-            //Небольшой костыль. 
-            //Позволяет изменять скорость объекта при условии, что она превышена и игрок пытается двигаться в обратной направлении
+            // A little crutch.
+            // Allows you to change the speed of the object, provided that it is exceeded and the player tries to move in the opposite direction
             if (_rb.velocity.x > _limitSpeed && _movementVector.x < 0)
                 _rb.AddForce(_movementVector * _speed, ForceMode2D.Impulse);
             if (_rb.velocity.x < - _limitSpeed && _movementVector.x > 0)
@@ -134,7 +136,7 @@ public class Player_move : MonoBehaviour
 
 
 
-    public void BoostSpeed(float _size, float _time)
+    public void BoostSpeed(float _size, float _time)  //Boost player
     {
         _speedBoost = _size;
         _timeBoost = _time;
@@ -146,6 +148,7 @@ public class Player_move : MonoBehaviour
     IEnumerator Boost()
     {
         yield return new WaitForSeconds(_timeBoost);
+        //stoped boost
         _speed -= _speedBoost;
     }
 }

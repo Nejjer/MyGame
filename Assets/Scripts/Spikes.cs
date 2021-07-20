@@ -9,15 +9,11 @@ public class Spikes : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out PlayerHealth _player) && _firstAdded)
         {
-            //Убиваем игрока
+            //Kill player
             _player.Damage(1.5f);
             _firstAdded = false;
         }
         
     }
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }

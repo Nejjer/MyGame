@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class SpawnDroppedObject : MonoBehaviour
 {
+
+    //CHECK README
+
     [SerializeField] GameObject _boost;
     [SerializeField] float _timeBetweenSpawnBoost = 5f;
     [SerializeField] GameObject _saw;

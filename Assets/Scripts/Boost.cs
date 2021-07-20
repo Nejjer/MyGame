@@ -15,13 +15,13 @@ public class Boost : MonoBehaviour
             _player.BoostSpeed(_sizeBoost, _timeBoost);
             Destroy(gameObject);
         }
-        //Если столкнулся с землей/платформой
-        else if(collision.gameObject.layer == 6)
+        // If collided with the ground / platform
+        else if (collision.gameObject.layer == 6)
         {
             StartCoroutine("Death");
         }
     }
-
+    //destroy obj, if it collided ground / platform
     IEnumerator Death()
     {
         yield return new WaitForSeconds(_deathTime);

@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class Heal : MonoBehaviour
 {
-    //Костыль, чтобы OnTrigger не обрабатывал 2 раза, потому что на игроке два колладйдера
+    // A crutch so that OnTrigger does not process 2 times, because the player has two colliders
     private bool _firstEnter = true;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //проверяем игрок ли зашел в тригер
+        
         if (collision.TryGetComponent(out PlayerHealth player) && _firstEnter)
         {
             Debug.Log("Try heal player");
-            //лечим игрока
+            //heal player
             player.Heal(0.5f);
-            //уничтожаем хилл
+            //destroy obj
             Destroy(gameObject);
-            //чтобы второй коллайдер не обработался
+            // so that the second collider is not processed
             _firstEnter = false;
         }
     }

@@ -10,11 +10,11 @@ public class Saw : MonoBehaviour
 
     private void Start()
     {
-        //Смещаем центр масс
+        // Shift the center of mass
         gameObject.GetComponent<Rigidbody2D>().centerOfMass = new Vector2(0.1f, 0f);
     }
 
-    //Наносим игроку урон
+    // Damage the player
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.TryGetComponent(out PlayerHealth _player) && _firstAdded)
@@ -23,13 +23,14 @@ public class Saw : MonoBehaviour
             Destroy(gameObject);
             _firstAdded = false;
         }
-        //Если столкнулся с землей/платформой
-        else if(collision.gameObject.layer == 6)
+        // If collided with the ground / platform
+        else if (collision.gameObject.layer == 6)
         {
             StartCoroutine("Death");
         }
     }
 
+    //destroy obj, if it collided ground / platform
     IEnumerator Death()
     {
         yield return new WaitForSeconds(_deathTime);

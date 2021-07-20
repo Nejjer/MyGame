@@ -6,17 +6,16 @@ public class SpawnHeal : MonoBehaviour
 {
     [SerializeField] GameObject _healObject;
     [SerializeField] float _timeBetweenSpawn;
-    //Костыль, чтобы спавнилсчя только один объект
+    // A crutch to spawn only one object
     private bool _firstObj = true;
 
-    // Update is called once per frame
     void Update()
     {
-        //Проверяет наличие созданного оьбъекта
+        // Checks for the existence of an object
         if (transform.childCount == 0 && _firstObj)
         {
             StartCoroutine("Spawn");
-            //false, чтобы объект больше не спавнился
+            //false, so that the object does not spawn anymore
             _firstObj = false;
         }
     }
@@ -25,8 +24,9 @@ public class SpawnHeal : MonoBehaviour
     {
         yield return new WaitForSeconds(_timeBetweenSpawn);
         //создаем HEAL на месте пустышки и сразу делаем пустышку родителем
+        // create a HEAL in place of the EmptyObj and immediately make the EmptyObj parent
         Instantiate(_healObject, transform.position, Quaternion.identity, transform);
-        //true, чтобы объект мог спавниться внось
+        //true, so that the object can spawn again
         _firstObj = true;
     }
 }

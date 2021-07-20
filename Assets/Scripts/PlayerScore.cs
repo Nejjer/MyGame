@@ -11,6 +11,7 @@ public class PlayerScore : MonoBehaviour
     public void AddScore(int _addedScore)
     {
         _score += _addedScore;
+        //Show score in UI
         _scoreBar.GetComponent<Text>().text = _score.ToString() + "/10";
     }
 
