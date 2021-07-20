@@ -1,5 +1,5 @@
 # This is important
-This game is only created to show your programming skills. The gameplay is bad.
+This game is only created to show my programming skills. The gameplay is bad.
 Класс SpawnDroppedObject плох. Плох он потому что я так решил. Была идея сделать класс SpawnDroppedObject родитлем для классов для каждых обхектов, но тогда надо было бы для спавна каждого объекта создавать отдельный класс спавна, я посчитал, что этого делать не стоит. 
 Player_move назвается так, а не PlayerMove, потому что я поздно осознал, что ошибся).
 
